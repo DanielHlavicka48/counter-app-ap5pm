@@ -1,15 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { AppComponent } from './app.component';
+import {CounterComponent } from './app.component';
 
-describe('AppComponent', () => {
+describe('CounterComponent', () => {
   it('should create the app', async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [CounterComponent],
       providers: [provideRouter([])]
     }).compileComponents();
     
-    const fixture = TestBed.createComponent(AppComponent);
+    const fixture = TestBed.createComponent(CounterComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
