@@ -60,37 +60,60 @@ export class Tab2Page implements OnInit {
   // BONUS 3 – vyhledávaný text
   readonly searchTerm = signal('');
 
+  // Individuální varianta D – filtrování podle hodnoty
+readonly valueFilter = signal('all');
+
   // Filtrovaná a seřazená historie
-  readonly filteredCounters = computed(() => {
-    const search = this.searchTerm().toLowerCase().trim();
+  
+readonly filteredCounters = computed(() => {
+  const search = this.searchTerm().toLowerCase().trim();
+  const filter = this.valueFilter();
 
-    const counters = this.counterService.counters().filter(
-      (counter) => counter.name.toLowerCase().includes(search),
-    );
+  const counters = this.counterService.counters().filter(
+    (counter) => {
+      // Filtrování podle názvu
+      const matchesName = counter.name
+        .toLowerCase()
+        .includes(search);
 
-    switch (this.sortMode()) {
-      case 'nameAsc':
-        return counters.sort((a, b) =>
-          a.name.localeCompare(b.name, 'cs'),
-        );
+      // Filtrování podle hodnoty – varianta D
+      let matchesValue = true;
 
-      case 'nameDesc':
-        return counters.sort((a, b) =>
-          b.name.localeCompare(a.name, 'cs'),
-        );
+      if (filter === 'positive') {
+        matchesValue = counter.value > 0;
+      } else if (filter === 'negative') {
+        matchesValue = counter.value < 0;
+      }
 
-      case 'valueAsc':
-        return counters.sort((a, b) => a.value - b.value);
+      return matchesName && matchesValue;
+    },
+  );
 
-      case 'valueDesc':
-        return counters.sort((a, b) => b.value - a.value);
+  // Řazení historie
+  switch (this.sortMode()) {
+    case 'nameAsc':
+      return counters.sort((a, b) =>
+        a.name.localeCompare(b.name, 'cs'),
+      );
 
-      default:
-        return counters.sort((a, b) =>
-          b.createdAt.localeCompare(a.createdAt),
-        );
-    }
-  });
+    case 'nameDesc':
+      return counters.sort((a, b) =>
+        b.name.localeCompare(a.name, 'cs'),
+      );
+
+    case 'valueAsc':
+      return counters.sort((a, b) => a.value - b.value);
+
+    case 'valueDesc':
+      return counters.sort((a, b) => b.value - a.value);
+
+    default:
+      return counters.sort((a, b) =>
+        b.createdAt.localeCompare(a.createdAt),
+      );
+  }
+});
+
 
   // BONUS 4 – potvrzovací dialog
   readonly alertOpen = signal(false);

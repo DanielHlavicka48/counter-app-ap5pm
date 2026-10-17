@@ -38,6 +38,29 @@
       (ionInput)="searchTerm.set($event.detail.value ?? '')"
     ></ion-searchbar>
 
+    <!-- Individuální varianta D -->
+<ion-item>
+  <ion-select
+    label="Filtrovat podle hodnoty"
+    labelPlacement="stacked"
+    interface="popover"
+    [value]="valueFilter()"
+    (ionChange)="valueFilter.set($event.detail.value)"
+  >
+    <ion-select-option value="all">
+      Všechny hodnoty
+    </ion-select-option>
+
+    <ion-select-option value="positive">
+      Kladné hodnoty
+    </ion-select-option>
+
+    <ion-select-option value="negative">
+      Záporné hodnoty
+    </ion-select-option>
+  </ion-select>
+</ion-item>
+
     <!-- BONUS 2 – řazení -->
     <ion-item>
       <ion-select
