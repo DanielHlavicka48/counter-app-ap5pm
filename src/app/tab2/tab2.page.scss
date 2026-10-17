@@ -1,8 +1,31 @@
+
+.history-summary,
 .history-header,
 ion-list,
+ion-searchbar,
 .state-message {
   max-width: 40rem;
   margin: 1rem auto;
+}
+
+.history-summary {
+  padding: 1rem;
+  border-radius: 12px;
+  background: var(--ion-color-light);
+
+  h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+  }
+
+  p {
+    margin-bottom: 0.5rem;
+  }
+
+  strong {
+    color: var(--ion-color-primary);
+    font-size: 1.5rem;
+  }
 }
 
 .history-header {
